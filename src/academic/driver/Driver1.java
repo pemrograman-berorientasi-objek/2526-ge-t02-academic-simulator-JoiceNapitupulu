@@ -1,58 +1,46 @@
 package academic.driver;
 
-import academic.model.Student;
-import java.util.Scanner; // Digunakan untuk membaca input dari konsol
+import academic.model.Course; // Pastikan kelas Course Anda ada di academic/model
+import java.util.Scanner;
 
-public class Driver2 {
-    // Ukuran array statis untuk menyimpan objek Student.
-    // Anda bisa mengubah ukuran ini sesuai kebutuhan.
-    private static final int MAX_STUDENTS = 100;
-    private static Student[] students = new Student[MAX_STUDENTS];
-    private static int studentCount = 0; // Melacak jumlah mahasiswa yang sudah ditambahkan
+public class Driver1 { // Nama kelas HARUS Driver1
+    private static final int MAX_COURSES = 100;
+    private static Course[] courses = new Course[MAX_COURSES];
+    private static int courseCount = 0;
 
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in); // Objek Scanner untuk membaca input
-        String line; // Variabel untuk menyimpan setiap baris input
+        Scanner scanner = new Scanner(System.in);
+        String line;
 
-        // Loop utama untuk membaca input hingga pengguna mengetik "---"
         while (scanner.hasNextLine()) {
-            line = scanner.nextLine(); // Baca satu baris input
+            line = scanner.nextLine();
 
-            // Cek jika input adalah tanda berhenti
             if (line.equals("---")) {
-                break; // Keluar dari loop jika "---" ditemukan
+                break;
             }
 
-            // Memproses setiap baris input data mahasiswa
-            // Contoh format input: 12S20999#Wiro Sableng#2020#Information Systems
-            String[] segments = line.split("#"); // Pisahkan string berdasarkan "#"
-
-            // Validasi format input: harus ada 4 bagian (ID, Nama, Tahun Masuk, Prodi)
+            String[] segments = line.split("#");
             if (segments.length == 4) {
-                String id = segments[0];
+                String code = segments[0];
                 String name = segments[1];
-                String entryYear = segments[2];
-                String studyProgram = segments[3];
+                int credits = Integer.parseInt(segments[2]);
+                String grade = segments[3]; // Contoh: 'C' atau 'A'
 
-                // Tambahkan objek Student baru ke array jika masih ada ruang
-                if (studentCount < MAX_STUDENTS) {
-                    students[studentCount] = new Student(id, name, entryYear, studyProgram);
-                    studentCount++; // Tambah hitungan mahasiswa
+                if (courseCount < MAX_COURSES) {
+                    courses[courseCount] = new Course(code, name, credits, grade);
+                    courseCount++;
                 } else {
-                    // Beri peringatan jika array penuh
-                    System.err.println("Penyimpanan mahasiswa penuh, tidak bisa menambah lagi: " + line);
+                    System.err.println("Penyimpanan course penuh, tidak bisa menambah lagi.");
                 }
             } else {
-                // Beri peringatan jika format input tidak valid
-                System.err.println("Format input tidak valid untuk mahasiswa: " + line);
+                System.err.println("Format input tidak valid: " + line);
             }
         }
 
-        // Setelah semua input selesai, tampilkan semua objek Student yang tersimpan
-        for (int i = 0; i < studentCount; i++) {
-            System.out.println(students[i].toString()); // Gunakan method toString untuk format output
+        for (int i = 0; i < courseCount; i++) {
+            System.out.println(courses[i].toString());
         }
 
-        scanner.close(); // Tutup objek Scanner untuk mencegah resource leak
+        scanner.close();
     }
 }

@@ -1,9 +1,9 @@
 package academic.driver;
 
-import academic.model.Course; // Pastikan kelas Course Anda ada di academic/model
+import academic.model.Course; 
 import java.util.Scanner;
 
-public class Driver1 { // Nama kelas HARUS Driver1
+public class Driver1 { 
     private static final int MAX_COURSES = 100;
     private static Course[] courses = new Course[MAX_COURSES];
     private static int courseCount = 0;
